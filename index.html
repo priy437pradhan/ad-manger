@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTV Trial — GAM Learning Site</title>
+
+<!-- ============================================================
+     STEP 1: Replace YOUR_NETWORK_CODE with your GAM network code.
+     Find it: GAM → Admin → Global settings → Network code
+     ============================================================ -->
+
+<!-- Google Publisher Tag (GPT) library -->
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+<script>
+  window.googletag = window.googletag || {cmd: []};
+
+  googletag.cmd.push(function() {
+
+    // ── AD UNIT DEFINITIONS ──────────────────────────────────
+    // Replace YOUR_NETWORK_CODE and ad unit paths with yours.
+    // Format: /NETWORK_CODE/ad_unit_name
+
+    // 1. Leaderboard (728×90) — top of page
+    googletag.defineSlot(
+      '/YOUR_NETWORK_CODE/leaderboard',   // ← your ad unit path
+      [728, 90],
+      'div-gpt-leaderboard'
+    ).addService(googletag.pubads());
+
+    // 2. Sidebar Rectangle (300×250) — right column
+    googletag.defineSlot(
+      '/YOUR_NETWORK_CODE/sidebar_rect',
+      [[300, 250], [300, 600]],            // multi-size
+      'div-gpt-sidebar'
+    ).addService(googletag.pubads());
+
+    // 3. In-content Banner (728×90 or 300×250) — between articles
+    googletag.defineSlot(
+      '/YOUR_NETWORK_CODE/incontent',
+      [[728, 90], [300, 250]],
+      'div-gpt-incontent'
+    ).addService(googletag.pubads());
+
+    // 4. Footer Banner (728×90) — bottom
+    googletag.defineSlot(
+      '/YOUR_NETWORK_CODE/footer_banner',
+      [728, 90],
+      'div-gpt-footer'
+    ).addService(googletag.pubads());
+
+    // ── KEY-VALUE TARGETING (optional) ──────────────────────
+    // Example: pass page section as targeting
+    googletag.pubads().setTargeting('section', 'homepage');
+
+    // Enable single-request mode (loads all ads in one call)
+    googletag.pubads().enableSingleRequest();
+
+    // Enable services
+    googletag.enableServices();
+  });
+</script>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f4f5f7;
+    color: #1a1a2e;
+    line-height: 1.6;
+  }
+
+  /* Header */
+  .site-header {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-header h1 { font-size: 22px; font-weight: 700; }
+  .site-header nav a {
+    color: rgba(255,255,255,.7);
+    text-decoration: none;
+    margin-left: 24px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .site-header nav a:hover { color: #fff; }
+
+  /* Ad slot placeholder styling */
+  .ad-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    background: #fff3cd;
+    border: 2px dashed #f0ad4e;
+    border-radius: 6px;
+    color: #856404;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    min-height: 90px;
+    overflow: hidden;
+    position: relative;
+  }
+  .ad-slot::before {
+    content: attr(data-label);
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    font-size: 10px;
+    background: #f0ad4e;
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+  .ad-leaderboard { max-width: 728px; height: 90px; }
+  .ad-sidebar { width: 300px; min-height: 250px; }
+  .ad-incontent { max-width: 728px; min-height: 90px; }
+  .ad-footer { max-width: 728px; height: 90px; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    margin-top: 20px;
+  }
+
+  /* Article cards */
+  .article-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 16px;
+    border: 1px solid #e2e4ea;
+  }
+  .article-card h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #1a1a2e;
+  }
+  .article-card .meta {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 12px;
+  }
+  .article-card p { font-size: 14px; color: #555; }
+  .article-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    background: #ddd;
+  }
+
+  /* Sidebar */
+  .sidebar-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid #e2e4ea;
+  }
+  .sidebar-section h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #1a73e8;
+  }
+  .sidebar-section ul { list-style: none; }
+  .sidebar-section li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+  }
+  .sidebar-section li:last-child { border: none; }
+
+  /* Footer */
+  .site-footer {
+    background: #1a1a2e;
+    color: rgba(255,255,255,.6);
+    text-align: center;
+    padding: 24px;
+    margin-top: 40px;
+    font-size: 13px;
+  }
+
+  /* GAM debug banner */
+  .debug-banner {
+    background: #d4edda;
+    color: #155724;
+    padding: 10px 20px;
+    font-size: 13px;
+    text-align: center;
+    font-weight: 500;
+  }
+  .debug-banner code {
+    background: rgba(0,0,0,.08);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .ad-leaderboard, .ad-incontent, .ad-footer { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Debug helper -->
+<div class="debug-banner">
+  GAM Trial Site — Add <code>?google_console=1</code> to URL to open the GPT debug console
+</div>
+
+<!-- Site Header -->
+<header class="site-header">
+  <h1>OTV Trial News</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">State</a>
+    <a href="#">National</a>
+    <a href="#">Sports</a>
+    <a href="#">Entertainment</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <!-- ═══ AD SLOT 1: Leaderboard (top) ═══ -->
+  <div id="div-gpt-leaderboard" class="ad-slot ad-leaderboard" data-label="Ad Slot 1 — Leaderboard 728×90">
+    Leaderboard Ad (728×90)
+  </div>
+  <script>
+    googletag.cmd.push(function() { googletag.display('div-gpt-leaderboard'); });
+  </script>
+
+  <div class="main-grid">
+
+    <!-- Main Content -->
+    <main>
+      <article class="article-card">
+        <div style="width:100%;height:180px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:6px;margin-bottom:12px;"></div>
+        <h2>State Government Launches New Digital Initiative</h2>
+        <div class="meta">Oct 4, 2026 • State News • 3 min read</div>
+        <p>The state government announced a major digital transformation project aimed at modernizing public services and improving citizen access to government resources across all districts.</p>
+      </article>
+
+      <article class="article-card">
+        <div style="width:100%;height:180px;background:linear-gradient(135deg,#f093fb,#f5576c);border-radius:6px;margin-bottom:12px;"></div>
+        <h2>Monsoon Season Brings Record Rainfall to Coastal Areas</h2>
+        <div class="meta">Oct 4, 2026 • Weather • 2 min read</div>
+        <p>Coastal districts recorded unprecedented rainfall this monsoon season, prompting authorities to enhance flood preparedness measures across vulnerable areas.</p>
+      </article>
+
+      <!-- ═══ AD SLOT 3: In-content Banner ═══ -->
+      <div id="div-gpt-incontent" class="ad-slot ad-incontent" data-label="Ad Slot 3 — In-Content 728×90 / 300×250">
+        In-Content Ad (728×90 or 300×250)
+      </div>
+      <script>
+        googletag.cmd.push(function() { googletag.display('div-gpt-incontent'); });
+      </script>
+
+      <article class="article-card">
+        <div style="width:100%;height:180px;background:linear-gradient(135deg,#4facfe,#00f2fe);border-radius:6px;margin-bottom:12px;"></div>
+        <h2>Local Cricket Team Advances to National Finals</h2>
+        <div class="meta">Oct 3, 2026 • Sports • 4 min read</div>
+        <p>In a thrilling semifinal match, the state cricket team secured their spot in the national championship finals with a decisive victory over the defending champions.</p>
+      </article>
+
+      <article class="article-card">
+        <div style="width:100%;height:180px;background:linear-gradient(135deg,#43e97b,#38f9d7);border-radius:6px;margin-bottom:12px;"></div>
+        <h2>New Cultural Festival to Showcase Traditional Art Forms</h2>
+        <div class="meta">Oct 3, 2026 • Entertainment • 5 min read</div>
+        <p>A week-long cultural festival featuring traditional dance, music, and craft exhibitions will be held next month, bringing together artists from across the region.</p>
+      </article>
+    </main>
+
+    <!-- Sidebar -->
+    <aside>
+      <!-- ═══ AD SLOT 2: Sidebar Rectangle ═══ -->
+      <div id="div-gpt-sidebar" class="ad-slot ad-sidebar" data-label="Ad Slot 2 — Sidebar 300×250 / 300×600">
+        Sidebar Ad (300×250)
+      </div>
+      <script>
+        googletag.cmd.push(function() { googletag.display('div-gpt-sidebar'); });
+      </script>
+
+      <div class="sidebar-section">
+        <h3>Trending Now</h3>
+        <ul>
+          <li>New highway project approved for eastern corridor</li>
+          <li>Tech startup raises ₹50 Cr in Series A funding</li>
+          <li>Weather alert: Heavy rain expected this week</li>
+          <li>Schools to adopt new digital curriculum</li>
+          <li>Tourism boost: Heritage sites get facelift</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li>About Us</li>
+          <li>Contact</li>
+          <li>Advertise With Us</li>
+          <li>Privacy Policy</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ═══ AD SLOT 4: Footer Banner ═══ -->
+  <div id="div-gpt-footer" class="ad-slot ad-footer" data-label="Ad Slot 4 — Footer 728×90">
+    Footer Ad (728×90)
+  </div>
+  <script>
+    googletag.cmd.push(function() { googletag.display('div-gpt-footer'); });
+  </script>
+
+</div>
+
+<footer class="site-footer">
+  &copy; 2026 OTV Trial News — GAM Learning Site. This is a practice website for Google Ad Manager testing.
+</footer>
+
+</body>
+</html>
